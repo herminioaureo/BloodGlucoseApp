@@ -3,8 +3,8 @@
         <div class="center"><p>Para continuar faça login...</p></div>
         <form class="example-form">
             <mat-form-field class="example-full-width">
-              <mat-label>E-mail:</mat-label>
-              <input matInput placeholder="fulano" #email>
+              <mat-label>Usuário:</mat-label>
+              <input matInput placeholder="fulano" #username>
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <mat-label>Senha:</mat-label>
@@ -15,7 +15,7 @@
           <section>
             <div class="center">
                 <div class="example-button-row">
-                    <button mat-flat-button (click)="login(email.value, password.value)">Login</button>
+                    <button mat-flat-button (click)="login(username.value, password.value)">Login</button>
                 </div>
             </div>
           </section>

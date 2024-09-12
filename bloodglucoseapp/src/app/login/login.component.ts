@@ -12,7 +12,7 @@ import { Recoveredjwttoken } from './recoveredjwttoken';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatButtonModule ],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatButtonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   providers: [LoginService]
@@ -26,14 +26,16 @@ export class LoginComponent {
               private router: Router
   ) {}
 
-  login(email: string, password: string) {
-    this.loginService.login(email, password).subscribe((data) => {
+  login(username: string, password: string) {
+    console.log('Login: ' + username + ' Password: ' + password);
+    this.loginService.login(username, password).subscribe((data) => {
       this.userToken = data;
 
       if (this.userToken.token != null) {
         this.userToken.isSucess = true;
       }
 
+      localStorage.setItem('username', username);
       localStorage.setItem('token', JSON.stringify(this.userToken.token));
 
       this.router.navigate(['/home']); // Redirecionar para a página /home em caso de sucesso
