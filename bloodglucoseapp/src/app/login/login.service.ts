@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Recoveredjwttoken } from './recoveredjwttoken';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,4 @@ export class LoginService {
   login(email: string, password: string): Observable<Recoveredjwttoken> {
     return this.httpClient.post<Recoveredjwttoken>(this.loginAPIUrl, { email, password });
   }
-
-
-  
 }

@@ -9,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  constructor() {
+    console.log(localStorage.getItem('token'));  // Recuperar o token do usuário do localStorage
+  }
+  
 }
