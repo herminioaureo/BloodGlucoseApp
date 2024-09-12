@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="center">
+        <div class="center"><p>Blood Glucose APP</p></div>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>E-mail:</mat-label>
+              <input matInput placeholder="fulano" #email>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Senha:</mat-label>
+              <input matInput type="password" #password>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+          </form>
+          <section>
+            <div class="center">
+                <div class="example-button-row">
+                    <button mat-flat-button (click)="login(email.value, password.value)">Login</button>
+                </div>
+            </div>
+          </section>
+    </div>
+</div>
+
