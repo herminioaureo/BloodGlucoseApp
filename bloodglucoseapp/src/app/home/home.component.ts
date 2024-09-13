@@ -1,16 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { HttpClient } from '@angular/common/http';
 
 
 export interface PeriodicElement {
-  name: string;
+  /**name: string;
   position: number;
   weight: number;
-  symbol: string;
+  symbol: string;**/
+
+  id: string;
+  meal: string;
+  value: string;
+  symbol: Date;
 }
 
+/** 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
@@ -22,7 +29,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+];*/
 
 @Component({
   selector: 'app-home',
@@ -32,15 +39,46 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './home.component.scss'
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+
+  constructor(private httpClient: HttpClient) { }
+
+  
+    
 
   displayedColumns: string[] = ['ID', 'Refeição', 'Glicemia', 'Data'];
   //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource([]);
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  ngOnInit(): void {
+
+    let token = localStorage.getItem('token');
+    //console.log('HomeComponent' + token);
+
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Authorization': 'Bearer ' + token,
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+    };
+
+    const loginAPIUrl = 'http://localhost:8080/glucoseapi/findAll';
+
+  //data: PeriodicElement[] = [];
+    this.httpClient.get<PeriodicElement>(loginAPIUrl).subscribe((data) => {
+    console.log(data);
+    
+    });
+  }
+  
 
 }
