@@ -4,6 +4,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatCardActions } from '@angular/material/card';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { Recoveredjwttoken } from './recoveredjwttoken';
@@ -12,7 +14,7 @@ import { Recoveredjwttoken } from './recoveredjwttoken';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatButtonModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatButtonModule, MatCardActions],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   providers: [LoginService]
@@ -23,7 +25,8 @@ export class LoginComponent {
   loginError = false;
 
   constructor(private loginService: LoginService,
-              private router: Router
+              private router: Router,
+              private snackBar: MatSnackBar
   ) {}
 
   login(username: string, password: string) {
@@ -33,12 +36,18 @@ export class LoginComponent {
 
       if (this.userToken.token != null) {
         this.userToken.isSucess = true;
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', JSON.stringify(this.userToken.token));
+        this.router.navigate(['/home']); // Redirecionar para a página /home em caso de sucesso
+
+      } else {
+        //nao esta funcionando
+        this.userToken.isSucess = false;
+        this.snackBar.open('Falha na autenticação', 'Usuário ou senha incorretos.', {
+          duration: 3000
+        });
       }
-
-      localStorage.setItem('username', username);
-      localStorage.setItem('token', JSON.stringify(this.userToken.token));
-
-      this.router.navigate(['/home']); // Redirecionar para a página /home em caso de sucesso
+      
     },(error) => {
       this.loginError = true;
     });
