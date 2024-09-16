@@ -1,35 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { HttpClient } from '@angular/common/http';
-
-
-export interface PeriodicElement {
-  /**name: string;
-  position: number;
-  weight: number;
-  symbol: string;**/
-
-  id: string;
-  meal: string;
-  value: string;
-  symbol: Date;
-}
-
-/** 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];*/
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { HomeService } from './home.service';
+import { Glucose } from './glucose';
 
 @Component({
   selector: 'app-home',
@@ -41,14 +15,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class HomeComponent implements OnInit {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private homeService: HomeService) { }
 
-  
-    
-
+  glucoseArray: Glucose[] = [];
   displayedColumns: string[] = ['ID', 'Refeição', 'Glicemia', 'Data'];
-  //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource([]);
+  dataSource = new MatTableDataSource(this.glucoseArray);
+  
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -56,29 +28,22 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    let token = localStorage.getItem('token');
-    //console.log('HomeComponent' + token);
-
-    const headerDict = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Authorization': 'Bearer ' + token,
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new Headers(headerDict), 
-    };
-
-    const loginAPIUrl = 'http://localhost:8080/glucoseapi/findAll';
-
-  //data: PeriodicElement[] = [];
-    this.httpClient.get<PeriodicElement>(loginAPIUrl).subscribe((data) => {
-    console.log(data);
-    
-    });
+    this.findAll();
   }
-  
 
+  findAll() {
+    let token = localStorage.getItem('token');
+
+    if (token !== null) {
+      console.log('Token recuperado:', token);
+      this.homeService.findAll(token).subscribe(glucoseArray => {
+        console.log('Dados processados:', glucoseArray);
+        this.dataSource.data = glucoseArray;
+      });
+      
+    } else {
+      // Handle the case when the token is null
+    }
+  }
 }
+
