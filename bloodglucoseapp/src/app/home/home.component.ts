@@ -13,10 +13,12 @@ import { Glucose } from './glucose';
   styleUrl: './home.component.scss'
 })
 
+
 export class HomeComponent implements OnInit {
 
   constructor(private homeService: HomeService) { }
-
+  username = localStorage.getItem('username');
+  
   glucoseArray: Glucose[] = [];
   displayedColumns: string[] = ['ID', 'Refeição', 'Glicemia', 'Data'];
   dataSource = new MatTableDataSource(this.glucoseArray);
@@ -33,11 +35,14 @@ export class HomeComponent implements OnInit {
 
   findAll() {
     let token = localStorage.getItem('token');
+   
 
     if (token !== null) {
       console.log('Token recuperado:', token);
+      
       this.homeService.findAll(token).subscribe(glucoseArray => {
         console.log('Dados processados:', glucoseArray);
+        
         this.dataSource.data = glucoseArray;
       });
       
