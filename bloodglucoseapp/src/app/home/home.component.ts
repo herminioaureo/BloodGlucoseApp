@@ -13,7 +13,6 @@ import { Glucose } from './glucose';
   styleUrl: './home.component.scss'
 })
 
-
 export class HomeComponent implements OnInit {
 
   constructor(private homeService: HomeService) { }
@@ -23,7 +22,6 @@ export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['ID', 'Refeição', 'Glicemia', 'Data'];
   dataSource = new MatTableDataSource(this.glucoseArray);
   
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -35,11 +33,8 @@ export class HomeComponent implements OnInit {
 
   findAll() {
     let token = localStorage.getItem('token');
-   
-
     if (token !== null) {
       console.log('Token recuperado:', token);
-      
       this.homeService.findAll(token).subscribe(glucoseArray => {
         this.dataSource.data = glucoseArray;
       });

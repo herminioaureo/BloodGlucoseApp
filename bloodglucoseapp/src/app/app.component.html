@@ -3,12 +3,10 @@
       <mat-toolbar color="primary">
         <span>Blood Glucose App</span>
         <span class="espacamento-toolbar"></span>
-        <nav>
-          <a href="/about">Sobre</a>
-        </nav>
-        <nav>
-          <a href="/newuser"> Novo usuário</a>
-        </nav>
+        <div class="button-row">
+          <a mat-button href="/newuser">Novo Usuário</a>
+          <a mat-button href="/about" target="_blank">Sobre</a>
+        </div>
         <span class="espacamento-toolbar"></span>
         <button mat-icon-button (click)="logout()">
           <mat-icon>logout</mat-icon>

@@ -8,3 +8,8 @@
 .espacamento-toolbar {
     flex: 1 1 auto;
 }
+
+.button-row {
+  display: table-cell;
+  max-width: 600px;
+}
