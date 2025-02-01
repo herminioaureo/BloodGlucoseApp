@@ -6,6 +6,7 @@
         <div class="button-row">
           <a mat-button href="/newuser">Novo Usuário</a>
           <a mat-button href="/about" target="_blank">Sobre</a>
+          <button mat-button (click)="openDialog()">Cadastrar Glicemia</button>
         </div>
         <span class="espacamento-toolbar"></span>
         <button mat-icon-button (click)="logout()">
@@ -17,6 +18,7 @@
   <mat-card-content>
     <router-outlet/>
   </mat-card-content>
+
   <footer>
     <div class="footer">
       <nav>
