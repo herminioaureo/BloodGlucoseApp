@@ -41,8 +41,6 @@ export class HomeComponent implements OnInit {
       console.log('Token recuperado:', token);
       
       this.homeService.findAll(token).subscribe(glucoseArray => {
-        console.log('Dados processados:', glucoseArray);
-        
         this.dataSource.data = glucoseArray;
       });
       

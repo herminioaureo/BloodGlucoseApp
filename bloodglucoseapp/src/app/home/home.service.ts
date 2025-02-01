@@ -13,7 +13,6 @@ export class HomeService {
   private glucoseAPIUrl = 'http://localhost:8080/glucoseapi/'; // URL da API de glicemia do Blood Glucose
 
   findAll(token: string): Observable<Glucose[]> {
-    console.log('findAll -> Token recuperado: ' + token);
     const URL = this.glucoseAPIUrl + 'findAll';
     
     return this.httpClient.get<Glucose[]>(URL, { headers: { Authorization: 'Bearer ' + token } }).pipe(

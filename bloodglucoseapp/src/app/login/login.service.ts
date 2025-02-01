@@ -14,7 +14,6 @@ export class LoginService {
   constructor(private httpClient: HttpClient) { }
 
   login(username: string, password: string): Observable<Recoveredjwttoken> {
-    console.log('Login: ' + username + ' Password: ' + password);
     return this.httpClient.post<Recoveredjwttoken>(this.loginAPIUrl, { username, password });
   }
 }
