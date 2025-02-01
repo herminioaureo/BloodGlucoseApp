@@ -47,6 +47,8 @@ export class AppComponent {
       console.log("token ausente");
     }
   }
+
+  
 }
 
 @Component({
@@ -70,10 +72,19 @@ export class AppComponent {
 })
 export class DialogContentExampleDialog {
 
-  constructor (private glucoseComponent: AddglucoseComponent) {}
+  constructor (private glucoseComponent: AddglucoseComponent,
+    private dialog: MatDialog
+  ) {}
 
   saveGlucose(meal: string, value: string, date: string){
     this.glucoseComponent.saveGlucose(meal, value, date);
+    this.closeDialog();
+  }
+
+  closeDialog() {
+    console.log("deveria fechar"); // not working
+    const dialogRef = this.dialog.open(DialogContentExampleDialog);
+    dialogRef.close();
   }
 
 }

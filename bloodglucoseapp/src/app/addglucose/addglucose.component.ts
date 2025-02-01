@@ -40,7 +40,7 @@ export class AddglucoseComponent {
   constructor(private glucoseService: AddGlucoseService) {}
 
   saveGlucose(meal: string, value: string, date: string) {
-    let token = localStorage.getItem('token');
+    
     this.glucoseService.save(meal, value, date);
     
   }
