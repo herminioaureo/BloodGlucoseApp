@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardActions } from '@angular/material/card';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -65,10 +66,11 @@ export class AppComponent {
         MatCardActions,
         MatSelectModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AddglucoseComponent]
 })
 export class DialogContentExampleDialog {
 
-  glucoseComponent: AddglucoseComponent = new AddglucoseComponent;
+  constructor (private glucoseComponent: AddglucoseComponent) {}
 
   saveGlucose(meal: string, value: string, date: string){
     this.glucoseComponent.saveGlucose(meal, value, date);

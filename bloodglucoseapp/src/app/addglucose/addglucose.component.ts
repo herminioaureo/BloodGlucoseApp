@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCardActions } from '@angular/material/card';
+import { AddGlucoseService } from './addglucose.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-addglucose',
@@ -29,12 +31,17 @@ import { MatCardActions } from '@angular/material/card';
            MatCardActions,
            MatSelectModule],
   templateUrl: './addglucose.component.html',
-  styleUrl: './addglucose.component.scss'
+  styleUrl: './addglucose.component.scss',
+  providers: [AddGlucoseService]
 })
 export class AddglucoseComponent {
 
+
+  constructor(private glucoseService: AddGlucoseService) {}
+
   saveGlucose(meal: string, value: string, date: string) {
-    console.log("Vai salvar a glicemia ->" + meal + value + date);
+    let token = localStorage.getItem('token');
+    this.glucoseService.save(meal, value, date);
     
   }
 
